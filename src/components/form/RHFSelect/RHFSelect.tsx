@@ -43,7 +43,7 @@ const RHFSelect = ({
             </SelectTrigger>
 
             <SelectContent>
-              {options.map((opt) => (
+              {options?.map((opt) => (
                 <SelectItem key={opt.value} value={opt.value}>
                   {opt.label}
                 </SelectItem>

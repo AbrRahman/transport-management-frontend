@@ -18,6 +18,23 @@ export const useGetAllPickupPoint = () => {
     },
   });
 };
+// get all pickup point base on route
+export const useGetPickupPointBaseOnRoute = (routeId?: string) => {
+  return useQuery({
+    queryKey: ["pickup-points", routeId],
+    queryFn: async () => {
+      try {
+        const { data } = await axiosInstance.get(
+          `/rote-pickup-point/route/${routeId}`,
+        );
+        return data;
+      } catch (error: any) {
+        throw new Error(error?.massage);
+      }
+    },
+    enabled: !!routeId,
+  });
+};
 
 // create create pickup point
 export const useCreatePickupPoint = () => {

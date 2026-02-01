@@ -18,6 +18,7 @@ import {
   useGetAllUnassignedVehicle,
 } from "../../hooks/assignVehicle";
 import type { TVehicle } from "../../types/vehicle.types";
+
 type TModalProps = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;

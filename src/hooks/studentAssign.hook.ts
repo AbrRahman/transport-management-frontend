@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { axiosInstance } from "../lib/api";
-import type { TPickupPointInputs } from "../schema/pickupPointValidationSchema";
 import type { AxiosError } from "axios";
 
 // get all assign student
@@ -27,7 +26,7 @@ export const useGetTransportFee = () => {
     queryFn: async () => {
       try {
         const { data } = await axiosInstance.get(
-          "/student-transport//transport-fee",
+          "/student-transport/transport-fee",
         );
         return data;
       } catch (error: any) {
@@ -37,11 +36,31 @@ export const useGetTransportFee = () => {
   });
 };
 
-// create create pickup point
-export const useCreatePickupPoint = () => {
+// get all student data
+export const useGetAllStudent = () => {
+  return useQuery({
+    queryKey: ["student"],
+    queryFn: async () => {
+      try {
+        const { data } = await axiosInstance.get("/student");
+        return data;
+      } catch (error: any) {
+        throw new Error(error?.massage);
+      }
+    },
+  });
+};
+
+// create assign student
+export const useCreateStudentAssignment = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (payload: TPickupPointInputs) => {
+    mutationFn: async (payload: {
+      studentId: string;
+      routeId: string;
+      pickupPointId: string;
+      month: number;
+    }) => {
       const { data } = await axiosInstance.post(
         "/student-transport/student-assign",
         payload,
@@ -49,14 +68,16 @@ export const useCreatePickupPoint = () => {
       return data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["get_pickup_point"] });
+      queryClient.invalidateQueries({ queryKey: ["assign_student"] });
+      queryClient.invalidateQueries({ queryKey: ["transport_fee"] });
+      queryClient.invalidateQueries({ queryKey: ["student"] });
     },
     onError: (error: AxiosError<any>) => {
       // const message =
       //   error.response?.data?.message ||
       //   error.message ||
       //   "Something went wrong";
-      toast.error("Pickup point create faild");
+      toast.error("student assignment create failed");
       console.log(error);
     },
   });

@@ -10,17 +10,26 @@ import {
 } from "../../components/ui/table";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { Pencil, Trash2 } from "lucide-react";
-import CreateRoutePickupPointModal from "../../components/routePickupPointModal/CreateRoutePickupPointModal";
-import { useGetAllAssignStudent } from "../../hooks/studentAssign.hook";
-import type { TStudentAssign } from "../../types/studentAssign.type";
+import {
+  useGetAllAssignStudent,
+  useGetTransportFee,
+} from "../../hooks/studentAssign.hook";
+import type {
+  TStudentAssign,
+  TTransportFee,
+} from "../../types/studentAssign.type";
+import CreateAssignStudentModal from "../../components/assignStudentModal/CreateAssignStudentModal";
 
 const StudentTransport = () => {
   const [isCreateStudentAssignModal, setIsCreateStudentAssignModal] =
     useState(false);
 
+  // get student transport data
   const { data: studentAssignmentLis, isLoading: SALoading } =
     useGetAllAssignStudent();
-  console.log(studentAssignmentLis?.data);
+
+  const { data: transportFeeList, isLoading: TFLoading } = useGetTransportFee();
+  console.log(transportFeeList?.data);
   return (
     <>
       <div className="flex justify-between items-center mb-2">
@@ -33,7 +42,7 @@ const StudentTransport = () => {
           }}
           className=" cursor-pointer"
         >
-          Add a New
+          Assign Student
         </Button>
       </div>
 
@@ -128,21 +137,43 @@ const StudentTransport = () => {
             <h1 className="text-xl font-bold text-center py-1.5">
               Transport Fee
             </h1>
-            {/* <div className="flex justify-center items-center w-full">
-              <LoadingSpinner />
-            </div> */}
-            <div className=" bg-slate-50 border rounded-sm shadow-sm p-4 space-y-1.5">
-              <div className="flex justify-between items-center">
-                <h2 className="text-base font-bold">Rahim abd</h2>
-                <h2 className="text-base text-blue-500 font-bold"> ৳1500</h2>
+            {/* loading state */}
+            {TFLoading && (
+              <div className="flex justify-center items-center w-full">
+                <LoadingSpinner />
               </div>
-              <p className=" text-base ">route is route</p>
-              <div className="flex justify-between items-center">
-                <h3 className="text-base font-semibold text-amber-700">
-                  Pending
-                </h3>
-                <h3 className="text-base font-semibold">Data</h3>
-              </div>
+            )}
+
+            <div className=" space-y-1.5">
+              {transportFeeList?.data?.map((transportFee: TTransportFee) => (
+                <div
+                  key={transportFee?.id}
+                  className=" bg-slate-50 border rounded-sm shadow-sm p-4 space-y-1.5"
+                >
+                  <div className="flex justify-between items-center">
+                    <h2 className="text-base font-bold">
+                      {transportFee?.student?.name}
+                    </h2>
+                    <h2 className="text-base text-blue-500 font-bold">
+                      {" "}
+                      ৳{transportFee?.amount}
+                    </h2>
+                  </div>
+                  <p className=" text-base ">{transportFee?.route?.name}</p>
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-base font-semibold text-amber-700">
+                      {transportFee?.status}
+                    </h3>
+                    <h3 className="text-base font-semibold">
+                      {
+                        new Date(transportFee?.createdAt)
+                          .toISOString()
+                          .split("T")[0]
+                      }
+                    </h3>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -150,7 +181,7 @@ const StudentTransport = () => {
 
       {/*  create Create student assign  model */}
 
-      <CreateRoutePickupPointModal
+      <CreateAssignStudentModal
         open={isCreateStudentAssignModal}
         setOpen={setIsCreateStudentAssignModal}
       />

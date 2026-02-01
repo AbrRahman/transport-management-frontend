@@ -19,3 +19,17 @@ export type TStudentAssign = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type TTransportFee = {
+  id: string;
+  amount: number;
+  route: {
+    name: string;
+  };
+  status: string;
+  student: {
+    name: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+};
