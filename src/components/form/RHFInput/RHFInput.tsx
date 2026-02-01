@@ -5,8 +5,15 @@ type RHFInputProps = {
   level: string;
   control: Control<any>;
   placeholder?: string;
+  type?: "text" | "number";
 };
-const RHFInput = ({ name, level, control, placeholder }: RHFInputProps) => {
+const RHFInput = ({
+  name,
+  level,
+  control,
+  placeholder,
+  type = "text",
+}: RHFInputProps) => {
   return (
     <Controller
       name={name}
@@ -16,6 +23,7 @@ const RHFInput = ({ name, level, control, placeholder }: RHFInputProps) => {
           <h3 className="text-black text-sm mb-0.5 ml-0.5">{level}</h3>
           <Input
             {...field}
+            type={type}
             value={field.value || ""}
             placeholder={placeholder}
             className={fieldState.invalid ? "border-red-500" : ""}

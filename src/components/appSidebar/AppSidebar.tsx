@@ -15,9 +15,13 @@ import { useState } from "react";
 const AppSidebar = () => {
   const [isActive, setActive] = useState("Vehicles");
   const menuItems = [
-    { name: "Vehicles", path: "/vehicles" },
+    { name: "Fee Master", path: "/fee-master" },
     { name: "Pickup Point", path: "/pickup-point" },
+    { name: "Vehicles", path: "/vehicles" },
     { name: "Routes", path: "/routes" },
+    { name: "Route Pickup Point", path: "/route-pickup-point" },
+    { name: "Assign Vehicle", path: "/assign-vehicle" },
+    { name: "Student Transport", path: "/student-transport" },
   ];
 
   return (

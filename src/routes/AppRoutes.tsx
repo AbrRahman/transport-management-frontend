@@ -3,6 +3,7 @@ import MainLayout from "../layout/MainLayout";
 import Vehicle from "../pages/Vehicle/Vehicle";
 import PickupPoint from "../pages/PickupPoint/PickupPoint";
 import RoutePage from "../pages/RoutePage/RoutePage";
+import FeeMaster from "../pages/FeeMaster/FeeMaster";
 
 const router = createBrowserRouter([
   {
@@ -10,15 +11,32 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: "/vehicles",
-        element: <Vehicle />,
+        path: "/fee-master",
+        element: <FeeMaster />,
       },
       {
         path: "/pickup-point",
         element: <PickupPoint />,
       },
       {
+        path: "/vehicles",
+        element: <Vehicle />,
+      },
+
+      {
         path: "/routes",
+        element: <RoutePage />,
+      },
+      {
+        path: "/route-pickup-point",
+        element: <RoutePage />,
+      },
+      {
+        path: "/assign-vehicle",
+        element: <RoutePage />,
+      },
+      {
+        path: "/student-transport",
         element: <RoutePage />,
       },
     ],
