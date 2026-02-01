@@ -6,6 +6,7 @@ import RoutePage from "../pages/RoutePage/RoutePage";
 import FeeMaster from "../pages/FeeMaster/FeeMaster";
 import RoutePickupPoint from "../pages/RoutePickupPoint/RoutePickupPoint";
 import AssignVehicle from "../pages/assignVehicle/AssignVehicle";
+import StudentTransport from "../pages/studentTransport/studentTransport";
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/student-transport",
-        element: <RoutePage />,
+        element: <StudentTransport />,
       },
     ],
   },
