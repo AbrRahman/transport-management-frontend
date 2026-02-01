@@ -39,7 +39,6 @@ const CreateFeeMasterModal = ({ open, setOpen }: TModalProps) => {
   const { mutate: createTransportFee, isPending } = useCreateTransportFee();
 
   const handleCreateFee = async (data: TFeeMasterInputs) => {
-    console.log(data);
     await createTransportFee(data, {
       onSuccess: () => {
         setOpen(false);

@@ -4,6 +4,7 @@ import Vehicle from "../pages/Vehicle/Vehicle";
 import PickupPoint from "../pages/PickupPoint/PickupPoint";
 import RoutePage from "../pages/RoutePage/RoutePage";
 import FeeMaster from "../pages/FeeMaster/FeeMaster";
+import RoutePickupPoint from "../pages/RoutePickupPoint/RoutePickupPoint";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/route-pickup-point",
-        element: <RoutePage />,
+        element: <RoutePickupPoint />,
       },
       {
         path: "/assign-vehicle",
