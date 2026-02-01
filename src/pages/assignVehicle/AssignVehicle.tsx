@@ -10,9 +10,9 @@ import {
 } from "../../components/ui/table";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { Pencil, Trash2 } from "lucide-react";
-import CreateRoutePickupPointModal from "../../components/routePickupPointModal/CreateRoutePickupPointModal";
 import { useGetAllAssignVehicle } from "../../hooks/assignVehicle";
 import type { TAssignVehicle } from "../../types/assignVehicle";
+import CreateAssignVehicleModal from "../../components/assignVehicleModal/CreateAssignVehicleModal";
 
 const AssignVehicle = () => {
   const [isCreateAssignVehicleOpen, setIsCreateAssignVehicleOpen] =
@@ -105,7 +105,7 @@ const AssignVehicle = () => {
 
       {/*  create Create assign vehicle  model */}
 
-      <CreateRoutePickupPointModal
+      <CreateAssignVehicleModal
         open={isCreateAssignVehicleOpen}
         setOpen={setIsCreateAssignVehicleOpen}
       />
