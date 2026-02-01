@@ -16,7 +16,7 @@ const AppSidebar = () => {
   const [isActive, setActive] = useState("Vehicles");
   const menuItems = [
     { name: "Vehicles", path: "/vehicles" },
-    { name: "Vehicle", path: "/vehicles" },
+    { name: "Pickup Point", path: "/pickup-point" },
   ];
 
   return (
@@ -45,7 +45,7 @@ const AppSidebar = () => {
                   to={item.path}
                   className={`flex font-bold ${isActive == item.name ? "bg-slate-800" : "bg-blue-600"} items-center gap-3 h-11 px-4 text-white hover:bg-slate-800 hover:text-slate-100 transition duration-300`}
                 >
-                  Vehicle
+                  {item.name}
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

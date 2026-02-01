@@ -2,16 +2,18 @@ import { Controller, type Control } from "react-hook-form";
 import { Input } from "../../../components/ui/input";
 type RHFInputProps = {
   name: string;
+  level: string;
   control: Control<any>;
   placeholder?: string;
 };
-const RHFInput = ({ name, control, placeholder }: RHFInputProps) => {
+const RHFInput = ({ name, level, control, placeholder }: RHFInputProps) => {
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState }) => (
         <div>
+          <h3 className="text-black text-sm mb-0.5 ml-0.5">{level}</h3>
           <Input
             {...field}
             value={field.value || ""}

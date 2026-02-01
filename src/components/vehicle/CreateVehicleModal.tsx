@@ -50,21 +50,25 @@ const CreateVehicleModal = ({ open, setOpen }: TCreateVehicleModalProps) => {
         >
           <RHFInput
             name="vehicleNo"
+            level="Vehicle No"
             control={form.control}
             placeholder="Enter vehicle number"
           />
           <RHFInput
             name="driverName"
+            level="Driver Name"
             control={form.control}
             placeholder="Enter vehicle driver name"
           />
           <RHFInput
             name="helperName"
+            level="Helper Name"
             control={form.control}
             placeholder="Enter vehicle helper name"
           />
           <RHFInput
             name="contactNo"
+            level="Contact No"
             control={form.control}
             placeholder="Enter vehicle contract number"
           />

@@ -8,47 +8,45 @@ import {
   TableHeader,
   TableRow,
 } from "../../components/ui/table";
-import CreateVehicleModal from "../../components/vehicle/CreateVehicleModal";
-import { useGetVehicles } from "../../hooks/vehicle.hook";
-import type { TVehicle } from "../../types/vehicle.types";
+// import CreateVehicleModal from "../../components/vehicle/CreateVehicleModal";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { Pencil, Trash2 } from "lucide-react";
+import { useGetAllPickupPoint } from "../../hooks/pickupPoint.hook";
+import type { TPickupPoint } from "../../types/pickupPoint.type";
+import CreatePickupPointModal from "../../components/pickupPoint/CreatePickupPointModal";
 
-const Vehicle = () => {
-  const [isVehicleModalOpen, setIsVehicleModalOpen] = useState(false);
-  const { data, isLoading } = useGetVehicles();
-  const vehiclesData = data?.data;
-
+const PickupPoint = () => {
+  const [isPickupPointModalOpen, setIsPickupPointModalOpen] = useState(false);
+  const { data, isLoading } = useGetAllPickupPoint();
+  const pickupPoint = data?.data;
   return (
     <>
       <div className="flex justify-between items-center mb-2">
-        <h1 className=" text-2xl font-bold text-black">Vehicles</h1>
+        <h1 className=" text-2xl font-bold text-black">Pickup Point</h1>
         <Button
           onClick={() => {
-            setIsVehicleModalOpen(true);
+            setIsPickupPointModalOpen(true);
           }}
           className=" cursor-pointer"
         >
-          Add Vehicle
+          Add Pickup Point
         </Button>
       </div>
       {/* table */}
       <Table className=" overflow-x-scroll">
         <TableHeader>
           <TableRow>
-            <TableHead>Vehicle No</TableHead>
-            <TableHead>Diver Name</TableHead>
-            <TableHead>Contact No</TableHead>
+            <TableHead>Pickup Point Name</TableHead>
+            <TableHead>Address</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
-          {vehiclesData?.map((vehicle: TVehicle) => (
-            <TableRow key={vehicle?.id}>
-              <TableCell> {vehicle?.vehicleNo}</TableCell>
-              <TableCell>{vehicle?.driverName}</TableCell>
-              <TableCell>{vehicle?.contactNo}</TableCell>
-              <TableCell>Actions</TableCell>
+          {pickupPoint?.map((pickupPoint: TPickupPoint) => (
+            <TableRow key={pickupPoint?.id}>
+              <TableCell> {pickupPoint?.name}</TableCell>
+              <TableCell>{pickupPoint?.location}</TableCell>
               {/* action btn */}
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
@@ -56,7 +54,7 @@ const Vehicle = () => {
                     variant="outline"
                     size="icon"
                     className="h-8 w-8 text-blue-600 hover:bg-blue-50"
-                    onClick={() => console.log("Edit", vehicle.id)}
+                    onClick={() => console.log("Edit", pickupPoint.id)}
                   >
                     <Pencil size={16} />
                   </Button>
@@ -64,7 +62,7 @@ const Vehicle = () => {
                     variant="outline"
                     size="icon"
                     className="h-8 w-8 text-red-600 hover:bg-red-50"
-                    onClick={() => console.log("Delete", vehicle.id)}
+                    onClick={() => console.log("Delete", pickupPoint.id)}
                   >
                     <Trash2 size={16} />
                   </Button>
@@ -86,10 +84,10 @@ const Vehicle = () => {
           )}
 
           {/* vehicle list is empty */}
-          {vehiclesData?.length === 0 && (
+          {pickupPoint?.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={3}
+                colSpan={2}
                 className="text-center text-muted-foreground"
               >
                 No data found
@@ -98,14 +96,15 @@ const Vehicle = () => {
           )}
         </TableBody>
       </Table>
-      {/* vehicle create model */}
 
-      <CreateVehicleModal
-        open={isVehicleModalOpen}
-        setOpen={setIsVehicleModalOpen}
+      {/*  create pickup point  model */}
+
+      <CreatePickupPointModal
+        open={isPickupPointModalOpen}
+        setOpen={setIsPickupPointModalOpen}
       />
     </>
   );
 };
 
-export default Vehicle;
+export default PickupPoint;
