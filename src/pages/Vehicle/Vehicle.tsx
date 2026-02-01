@@ -20,7 +20,8 @@ const Vehicle = () => {
 
   return (
     <>
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center mb-2">
+        <h1 className=" text-2xl font-bold text-black">Vehicles</h1>
         <Button
           onClick={() => {
             setIsVehicleModalOpen(true);
@@ -48,30 +49,31 @@ const Vehicle = () => {
               <TableCell>{vehicle?.contactNo}</TableCell>
             </TableRow>
           ))}
+
+          {/* show loading spinner */}
+
+          {isLoading && (
+            <TableRow>
+              <TableCell colSpan={3} className="h-40 text-center">
+                <div className="flex justify-center items-center w-full">
+                  <LoadingSpinner />
+                </div>
+              </TableCell>
+            </TableRow>
+          )}
+
+          {/* vehicle list is empty */}
+          {vehiclesData?.length === 0 && (
+            <TableRow>
+              <TableCell
+                colSpan={3}
+                className="text-center text-muted-foreground"
+              >
+                No data found
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
-        {/* show loading spinner */}
-
-        {isLoading && (
-          <TableRow>
-            <TableCell colSpan={3} className="h-40 text-center">
-              <div className="flex justify-center items-center w-full">
-                <LoadingSpinner />
-              </div>
-            </TableCell>
-          </TableRow>
-        )}
-
-        {/* vehicle list is empty */}
-        {vehiclesData?.length === 0 && (
-          <TableRow>
-            <TableCell
-              colSpan={3}
-              className="text-center text-muted-foreground"
-            >
-              No data found
-            </TableCell>
-          </TableRow>
-        )}
       </Table>
       {/* vehicle create model */}
 
