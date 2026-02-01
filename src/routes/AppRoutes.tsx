@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import MainLayout from "../layout/MainLayout";
 import Vehicle from "../pages/Vehicle/Vehicle";
 import PickupPoint from "../pages/PickupPoint/PickupPoint";
+import RoutePage from "../pages/RoutePage/RoutePage";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "/pickup-point",
         element: <PickupPoint />,
+      },
+      {
+        path: "/routes",
+        element: <RoutePage />,
       },
     ],
   },

@@ -17,6 +17,7 @@ const AppSidebar = () => {
   const menuItems = [
     { name: "Vehicles", path: "/vehicles" },
     { name: "Pickup Point", path: "/pickup-point" },
+    { name: "Routes", path: "/routes" },
   ];
 
   return (
