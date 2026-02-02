@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import RHFInput from "../form/RHFInput/RHFInput";
 import { toast } from "sonner";
 
-import { useGetAllRoutes } from "../../hooks/route.hook";
+import { useGetAllRoutesByUnassignedTransferFee } from "../../hooks/route.hook";
 import {
   createFeeMasterSchema,
   type TFeeMasterInputs,
@@ -29,7 +29,7 @@ const CreateFeeMasterModal = ({ open, setOpen }: TModalProps) => {
   });
 
   //   get route set as a potion
-  const { data } = useGetAllRoutes();
+  const { data } = useGetAllRoutesByUnassignedTransferFee();
   const routes = data?.data;
   const options = routes?.map((route: TRoute) => ({
     label: route?.name,
@@ -51,7 +51,7 @@ const CreateFeeMasterModal = ({ open, setOpen }: TModalProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
-        <DialogTitle>Add a vehicle</DialogTitle>
+        <DialogTitle>Add a transport fee</DialogTitle>
         {/* form */}
         <form
           onSubmit={form.handleSubmit(handleCreateFee)}

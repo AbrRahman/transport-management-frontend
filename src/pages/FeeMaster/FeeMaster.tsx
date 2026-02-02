@@ -9,16 +9,20 @@ import {
   TableRow,
 } from "../../components/ui/table";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useGetAllTransportFee } from "../../hooks/feeMaster.hook";
 import type { TFeeMaster } from "../../types/feeMaster.type";
 import CreateFeeMasterModal from "../../components/feeMasterModal/CreateFeeMasterModal";
+import DeleteFeeMasterModal from "../../components/feeMasterModal/DeleteFeeMasterModal";
 
 const FeeMaster = () => {
   const [isFeeMasterModalOpen, setIsFeeMasterModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
+
   const { data, isLoading } = useGetAllTransportFee();
   const feeMastersData = data?.data;
-  console.log(feeMastersData);
+
   return (
     <>
       <div className="flex justify-between items-center mb-2">
@@ -55,21 +59,16 @@ const FeeMaster = () => {
               <TableCell> {feeMaster?.route.endPoint}</TableCell>
 
               {/* action btn */}
-              <TableCell className="text-right">
+              <TableCell className="">
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
                     size="icon"
-                    className="h-8 w-8 text-blue-600 hover:bg-blue-50"
-                    onClick={() => console.log("Edit", feeMaster?.id)}
-                  >
-                    <Pencil size={16} />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-8 w-8 text-red-600 hover:bg-red-50"
-                    onClick={() => console.log("Delete", feeMaster?.id)}
+                    className="h-8 w-8 text-red-600 hover:bg-red-50 cursor-pointer"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      setDeleteId(feeMaster?.id);
+                    }}
                   >
                     <Trash2 size={16} />
                   </Button>
@@ -103,12 +102,16 @@ const FeeMaster = () => {
           )}
         </TableBody>
       </Table>
-
-      {/*  create transfer fee  model */}
-
+      {/*  create transfer fee  modal */}
       <CreateFeeMasterModal
         open={isFeeMasterModalOpen}
         setOpen={setIsFeeMasterModalOpen}
+      />
+      {/* delete transfer fee modal */}
+      <DeleteFeeMasterModal
+        open={isDeleteModalOpen}
+        setOpen={setIsDeleteModalOpen}
+        id={deleteId}
       />
     </>
   );

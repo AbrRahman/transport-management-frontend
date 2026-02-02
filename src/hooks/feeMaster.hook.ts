@@ -40,3 +40,26 @@ export const useCreateTransportFee = () => {
     },
   });
 };
+
+// delete a transfer fee
+export const useDeleteRouteTransferFee = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { data } = await axiosInstance.delete(`/transport-fee/${id}`);
+      return data;
+    },
+
+    onSuccess: () => {
+      toast.success("Deleted successfully");
+      // auto refetch after delete
+      queryClient.invalidateQueries({
+        queryKey: ["transport_fee"],
+      });
+    },
+    onError: (error: AxiosError<any>) => {
+      toast.error("Failed to delete");
+      console.error(error);
+    },
+  });
+};

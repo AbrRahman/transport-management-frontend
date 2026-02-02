@@ -4,13 +4,26 @@ import { axiosInstance } from "../lib/api";
 import type { AxiosError } from "axios";
 import type { TRouteInputs } from "../schema/routeValidationSchema";
 
-// get all pickup point
+// get all routes
 export const useGetAllRoutes = () => {
   return useQuery({
     queryKey: ["route"],
     queryFn: async () => {
       try {
         const { data } = await axiosInstance.get("/route");
+        return data;
+      } catch (error: any) {
+        throw new Error(error?.massage);
+      }
+    },
+  });
+};
+export const useGetAllRoutesByUnassignedTransferFee = () => {
+  return useQuery({
+    queryKey: ["unassign_transfer_fee_route"],
+    queryFn: async () => {
+      try {
+        const { data } = await axiosInstance.get("/route/unassign-fee");
         return data;
       } catch (error: any) {
         throw new Error(error?.massage);
