@@ -57,3 +57,25 @@ export const useCreatePickupPoint = () => {
     },
   });
 };
+// delete a pickup point
+export const useDeleteAPickupPoint = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { data } = await axiosInstance.delete(`/pickup-point/${id}`);
+      return data;
+    },
+
+    onSuccess: () => {
+      toast.success("Deleted successfully");
+      // auto refetch after delete
+      queryClient.invalidateQueries({
+        queryKey: ["get_pickup_point"],
+      });
+    },
+    onError: (error: AxiosError<any>) => {
+      toast.error("Failed to delete");
+      console.error(error);
+    },
+  });
+};

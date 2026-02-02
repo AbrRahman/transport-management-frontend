@@ -41,7 +41,7 @@ const CreatePickupPointModal = ({ open, setOpen }: TModalProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
-        <DialogTitle>Add a vehicle</DialogTitle>
+        <DialogTitle>Add a Pickup Point</DialogTitle>
         {/* form */}
         <form
           onSubmit={form.handleSubmit(handleCreatePickupPoint)}

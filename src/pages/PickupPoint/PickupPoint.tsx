@@ -10,13 +10,16 @@ import {
 } from "../../components/ui/table";
 // import CreateVehicleModal from "../../components/vehicle/CreateVehicleModal";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useGetAllPickupPoint } from "../../hooks/pickupPoint.hook";
 import type { TPickupPoint } from "../../types/pickupPoint.type";
 import CreatePickupPointModal from "../../components/pickupPoint/CreatePickupPointModal";
+import DeletePickupPointModal from "../../components/pickupPoint/DeletePickupPointModal";
 
 const PickupPoint = () => {
   const [isPickupPointModalOpen, setIsPickupPointModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
   const { data, isLoading } = useGetAllPickupPoint();
   const pickupPoint = data?.data;
   return (
@@ -48,24 +51,24 @@ const PickupPoint = () => {
               <TableCell> {pickupPoint?.name}</TableCell>
               <TableCell>{pickupPoint?.location}</TableCell>
               {/* action btn */}
-              <TableCell className="text-right">
-                <div className="flex justify-end gap-2">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-8 w-8 text-blue-600 hover:bg-blue-50"
-                    onClick={() => console.log("Edit", pickupPoint.id)}
-                  >
-                    <Pencil size={16} />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-8 w-8 text-red-600 hover:bg-red-50"
-                    onClick={() => console.log("Delete", pickupPoint.id)}
-                  >
-                    <Trash2 size={16} />
-                  </Button>
+              <TableCell className="">
+                <div className="flex gap-2">
+                  {/* action btn */}
+                  <TableCell className="">
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-8 w-8 text-red-600 hover:bg-red-50 cursor-pointer"
+                        onClick={() => {
+                          setIsDeleteModalOpen(true);
+                          setDeleteId(pickupPoint?.id);
+                        }}
+                      >
+                        <Trash2 size={16} />
+                      </Button>
+                    </div>
+                  </TableCell>
                 </div>
               </TableCell>
             </TableRow>
@@ -97,11 +100,18 @@ const PickupPoint = () => {
         </TableBody>
       </Table>
 
-      {/*  create pickup point  model */}
+      {/*  create pickup point  modal */}
 
       <CreatePickupPointModal
         open={isPickupPointModalOpen}
         setOpen={setIsPickupPointModalOpen}
+      />
+
+      {/* delete a pickup point modal */}
+      <DeletePickupPointModal
+        open={isDeleteModalOpen}
+        setOpen={setIsDeleteModalOpen}
+        id={deleteId}
       />
     </>
   );
