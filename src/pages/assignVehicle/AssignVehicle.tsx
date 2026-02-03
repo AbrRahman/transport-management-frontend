@@ -10,7 +10,7 @@ import {
 } from "../../components/ui/table";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
 import { Trash2 } from "lucide-react";
-import { useGetAllAssignVehicle } from "../../hooks/assignVehicle";
+import { useGetAllAssignVehicle } from "../../hooks/assignVehicle.hook";
 import type { TAssignVehicle } from "../../types/assignVehicle";
 import CreateAssignVehicleModal from "../../components/assignVehicleModal/CreateAssignVehicleModal";
 import DeleteAssignVehicleModal from "../../components/assignVehicleModal/DeleteAssignVehicleModal";

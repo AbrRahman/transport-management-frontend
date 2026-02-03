@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 import type { Dispatch, SetStateAction } from "react";
 import { Button } from "../ui/button";
-import { useDeleteAAssignVehicle } from "../../hooks/assignVehicle";
+import { useDeleteAAssignVehicle } from "../../hooks/assignVehicle.hook";
 type TModalProps = {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;

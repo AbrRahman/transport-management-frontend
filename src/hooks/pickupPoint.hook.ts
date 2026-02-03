@@ -76,7 +76,7 @@ export const useDeleteAPickupPoint = () => {
   });
 };
 
-// get single route
+// get single pickup point
 export const useGetSinglePickupPoint = (
   id: string,
   options?: { enabled?: boolean },
@@ -96,7 +96,7 @@ export const useGetSinglePickupPoint = (
   });
 };
 
-// update a route
+// update a pickup point
 export const useUpdatePickupPoint = () => {
   const queryClient = useQueryClient();
   return useMutation({

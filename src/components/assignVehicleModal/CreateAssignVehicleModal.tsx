@@ -16,7 +16,7 @@ import {
   useCreateAssignVehicle,
   useGetAllUnassignedRoute,
   useGetAllUnassignedVehicle,
-} from "../../hooks/assignVehicle";
+} from "../../hooks/assignVehicle.hook";
 import type { TVehicle } from "../../types/vehicle.types";
 
 type TModalProps = {

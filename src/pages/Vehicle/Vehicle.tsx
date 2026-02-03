@@ -12,13 +12,16 @@ import CreateVehicleModal from "../../components/vehicle/CreateVehicleModal";
 import { useGetVehicles } from "../../hooks/vehicle.hook";
 import type { TVehicle } from "../../types/vehicle.types";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import DeleteVehicleModal from "../../components/vehicle/DeleteVehicleModal";
+import UpdateVehicleModal from "../../components/vehicle/UpdateVechicleModal";
 
 const Vehicle = () => {
   const [isVehicleModalOpen, setIsVehicleModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState("");
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [updateId, setUpdateId] = useState("");
   const { data, isLoading } = useGetVehicles();
   const vehiclesData = data?.data;
 
@@ -53,24 +56,30 @@ const Vehicle = () => {
               <TableCell>{vehicle?.driverName}</TableCell>
               <TableCell>{vehicle?.contactNo}</TableCell>
               {/* action btn */}
-              <TableCell className="">
+              <TableCell>
                 <div className="flex gap-2">
-                  {/* action btn */}
-                  <TableCell className="">
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-8 w-8 text-red-600 hover:bg-red-50 cursor-pointer"
-                        onClick={() => {
-                          setIsDeleteModalOpen(true);
-                          setDeleteId(vehicle?.id);
-                        }}
-                      >
-                        <Trash2 size={16} />
-                      </Button>
-                    </div>
-                  </TableCell>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-8 w-8 text-blue-600 hover:bg-blue-50  cursor-pointer"
+                    onClick={() => {
+                      setIsUpdateModalOpen(true);
+                      setUpdateId(vehicle?.id);
+                    }}
+                  >
+                    <Pencil size={16} />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-8 w-8 text-red-600 hover:bg-red-50 cursor-pointer"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      setDeleteId(vehicle?.id);
+                    }}
+                  >
+                    <Trash2 size={16} />
+                  </Button>
                 </div>
               </TableCell>
             </TableRow>
@@ -107,6 +116,13 @@ const Vehicle = () => {
         open={isVehicleModalOpen}
         setOpen={setIsVehicleModalOpen}
       />
+      {/* update vehicle modal */}
+      <UpdateVehicleModal
+        open={isUpdateModalOpen}
+        setOpen={setIsUpdateModalOpen}
+        id={updateId}
+      />
+
       {/* delete a pickup point modal */}
       <DeleteVehicleModal
         open={isDeleteModalOpen}

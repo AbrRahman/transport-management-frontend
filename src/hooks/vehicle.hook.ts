@@ -29,10 +29,6 @@ export const useCreateVehicle = () => {
       queryClient.invalidateQueries({ queryKey: ["get_vehicles"] });
     },
     onError: (error: AxiosError<any>) => {
-      // const message =
-      //   error.response?.data?.message ||
-      //   error.message ||
-      //   "Something went wrong";
       console.log(error);
     },
   });
@@ -56,6 +52,55 @@ export const useDeleteAVehicle = () => {
     },
     onError: (error: AxiosError<any>) => {
       toast.error("Failed to delete");
+      console.error(error);
+    },
+  });
+};
+
+// get single vehicle
+export const useGetSingleVehicle = (
+  id: string,
+  options?: { enabled?: boolean },
+) => {
+  return useQuery({
+    queryKey: ["single_vehicle", id],
+    queryFn: async () => {
+      try {
+        const { data } = await axiosInstance.get(`/vehicle/${id}`);
+        return data;
+      } catch (error: any) {
+        console.log(error);
+        throw new Error(error?.massage);
+      }
+    },
+    enabled: options?.enabled,
+  });
+};
+
+// update a vehicle
+export const useUpdateVehicle = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (payload: {
+      id: string;
+      data: Partial<TVehicleInputs>;
+    }) => {
+      const { data } = await axiosInstance.put(
+        `/vehicle/${payload?.id}`,
+        payload?.data,
+      );
+      return data;
+    },
+
+    onSuccess: () => {
+      toast.success("Update successfully");
+      // auto refetch after
+      queryClient.invalidateQueries({
+        queryKey: ["get_vehicles"],
+      });
+    },
+    onError: (error: AxiosError<any>) => {
+      toast.error("Failed to Update");
       console.error(error);
     },
   });
