@@ -13,8 +13,9 @@ import { Link } from "react-router";
 import { useState } from "react";
 
 const AppSidebar = () => {
-  const [isActive, setActive] = useState("Vehicles");
+  const [isActive, setActive] = useState("Dashboard");
   const menuItems = [
+    { name: "Dashboard", path: "/" },
     { name: "Fee Master", path: "/fee-master" },
     { name: "Pickup Point", path: "/pickup-point" },
     { name: "Vehicles", path: "/vehicles" },

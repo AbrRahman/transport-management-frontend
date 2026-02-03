@@ -27,6 +27,7 @@ const PickupPoint = () => {
   const { data, isLoading } = useGetAllPickupPoint();
 
   const pickupPoint = data?.data;
+  console.log(pickupPoint);
   return (
     <>
       <div className="flex justify-between items-center mb-2">

@@ -6,13 +6,18 @@ import RoutePage from "../pages/RoutePage/RoutePage";
 import FeeMaster from "../pages/FeeMaster/FeeMaster";
 import RoutePickupPoint from "../pages/RoutePickupPoint/RoutePickupPoint";
 import AssignVehicle from "../pages/assignVehicle/AssignVehicle";
-import StudentTransport from "../pages/studentTransport/studentTransport";
+import Dashboard from "../pages/dashboard/Dashboard";
+import StudentTransport from "../pages/studentTransport/StudentTransport";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     children: [
+      {
+        path: "/",
+        element: <Dashboard />,
+      },
       {
         path: "/fee-master",
         element: <FeeMaster />,

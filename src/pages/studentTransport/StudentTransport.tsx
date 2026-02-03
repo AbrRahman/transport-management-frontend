@@ -53,93 +53,98 @@ const StudentTransport = () => {
       <div className=" grid grid-cols-1 lg:grid-cols-12 gap-3">
         {/* table */}
         <div className="lg:col-span-8">
-          <Table className=" overflow-x-scroll">
-            <TableHeader>
-              <TableRow>
-                <TableHead>Student</TableHead>
-                <TableHead>Route</TableHead>
-                <TableHead>Pickup Point</TableHead>
-                <TableHead>Vehicle</TableHead>
-                <TableHead>Destination</TableHead>
-                <TableHead>Stats</TableHead>
+          <div>
+            <h1 className="text-xl font-bold text-center py-1.5">
+              Assign Student
+            </h1>
+            <Table className=" overflow-x-scroll">
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Student</TableHead>
+                  <TableHead>Route</TableHead>
+                  <TableHead>Pickup Point</TableHead>
+                  <TableHead>Vehicle</TableHead>
+                  <TableHead>Destination</TableHead>
+                  <TableHead>Stats</TableHead>
 
-                <TableHead>Action</TableHead>
-              </TableRow>
-            </TableHeader>
+                  <TableHead>Action</TableHead>
+                </TableRow>
+              </TableHeader>
 
-            <TableBody>
-              {studentAssignmentLis?.data?.map(
-                (assignStudent: TStudentAssign) => (
-                  <TableRow key={assignStudent?.id}>
-                    <TableCell> {assignStudent?.student?.name}</TableCell>
-                    <TableCell>{assignStudent?.route?.name}</TableCell>
-                    <TableCell>{assignStudent?.pickupPoint?.name}</TableCell>
-                    <TableCell>
-                      {assignStudent?.route?.routeVehicle?.vehicle?.vehicleNo}
-                    </TableCell>
-                    <TableCell>{assignStudent?.route?.endPoint}</TableCell>
-                    <TableCell>
-                      <span className="text-amber-700 text-xs font-bold">
-                        {" "}
-                        {assignStudent?.isActive ? "ACTIVE" : "DEACTIVATE"}
-                      </span>
-                    </TableCell>
-                    {/* action btn */}
-                    <TableCell>
-                      <div className="flex gap-2">
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-8 w-8 text-blue-600 hover:bg-blue-50  cursor-pointer"
-                          onClick={() => {
-                            setIsUpdateModalOpen(true);
-                            setUpdateId(assignStudent?.id);
-                          }}
-                        >
-                          <Pencil size={16} />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-8 w-8 text-red-600 hover:bg-red-50 cursor-pointer"
-                          onClick={() => {
-                            setIsDeleteModalOpen(true);
-                            setDeleteId(assignStudent?.id);
-                          }}
-                        >
-                          <Trash2 size={16} />
-                        </Button>
+              <TableBody>
+                {studentAssignmentLis?.data?.map(
+                  (assignStudent: TStudentAssign) => (
+                    <TableRow key={assignStudent?.id}>
+                      <TableCell> {assignStudent?.student?.name}</TableCell>
+                      <TableCell>{assignStudent?.route?.name}</TableCell>
+                      <TableCell>{assignStudent?.pickupPoint?.name}</TableCell>
+                      <TableCell>
+                        {assignStudent?.route?.routeVehicle?.vehicle?.vehicleNo}
+                      </TableCell>
+                      <TableCell>{assignStudent?.route?.endPoint}</TableCell>
+                      <TableCell>
+                        <span className="text-amber-700 text-xs font-bold">
+                          {" "}
+                          {assignStudent?.isActive ? "ACTIVE" : "DEACTIVATE"}
+                        </span>
+                      </TableCell>
+                      {/* action btn */}
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-8 w-8 text-blue-600 hover:bg-blue-50  cursor-pointer"
+                            onClick={() => {
+                              setIsUpdateModalOpen(true);
+                              setUpdateId(assignStudent?.id);
+                            }}
+                          >
+                            <Pencil size={16} />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-8 w-8 text-red-600 hover:bg-red-50 cursor-pointer"
+                            onClick={() => {
+                              setIsDeleteModalOpen(true);
+                              setDeleteId(assignStudent?.id);
+                            }}
+                          >
+                            <Trash2 size={16} />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ),
+                )}
+
+                {/* show loading spinner */}
+
+                {SALoading && (
+                  <TableRow>
+                    <TableCell colSpan={7} className="h-40 text-center">
+                      <div className="flex justify-center items-center w-full">
+                        <LoadingSpinner />
                       </div>
                     </TableCell>
                   </TableRow>
-                ),
-              )}
+                )}
 
-              {/* show loading spinner */}
-
-              {SALoading && (
-                <TableRow>
-                  <TableCell colSpan={7} className="h-40 text-center">
-                    <div className="flex justify-center items-center w-full">
-                      <LoadingSpinner />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              )}
-
-              {/*  list is empty */}
-              {studentAssignmentLis?.data?.length === 0 && (
-                <TableRow>
-                  <TableCell
-                    colSpan={7}
-                    className="text-center text-muted-foreground"
-                  >
-                    No data found
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                {/*  list is empty */}
+                {studentAssignmentLis?.data?.length === 0 && (
+                  <TableRow>
+                    <TableCell
+                      colSpan={7}
+                      className="text-center text-muted-foreground"
+                    >
+                      No data found
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
         </div>
 
         {/* fee belling data */}
