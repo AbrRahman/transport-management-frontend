@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Dispatch, SetStateAction } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -34,15 +34,15 @@ const CreateAssignVehicleModal = ({ open, setOpen }: TModalProps) => {
   });
 
   //   get route set as a potion
-  const { data: routes } = useGetAllUnassignedRoute();
+  const { data: routes, isLoading: routeLoading } = useGetAllUnassignedRoute();
   const RouteOptions = routes?.data?.map((route: TRoute) => ({
     label: route?.name,
     value: route?.id,
   }));
 
   // get all vehicle
-  const { data: vehicles } = useGetAllUnassignedVehicle();
-  console.log(vehicles?.data);
+  const { data: vehicles, isLoading: vehicleLoading } =
+    useGetAllUnassignedVehicle();
   const vehicleOptions = vehicles?.data?.map((vehicle: TVehicle) => ({
     label: vehicle?.vehicleNo,
     value: vehicle?.id,
@@ -59,6 +59,22 @@ const CreateAssignVehicleModal = ({ open, setOpen }: TModalProps) => {
       },
     });
   };
+
+  // if route or vehicle data is empty then close modal
+  useEffect(() => {
+    if (!open) return;
+    if (routeLoading || vehicleLoading) return;
+    // route empty
+    if (routes?.data && routes.data.length == 0) {
+      toast.error("No available routes found. Please create a route first.");
+      setOpen(false);
+    }
+    // vehicle empty
+    if (vehicles?.data && vehicles.data.length == 0) {
+      toast.error("No available vehicles found. Please add a vehicle first.");
+      setOpen(false);
+    }
+  }, [open, routeLoading, vehicleLoading, routes, vehicles, setOpen]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

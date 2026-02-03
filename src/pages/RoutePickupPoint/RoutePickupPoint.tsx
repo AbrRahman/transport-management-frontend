@@ -9,16 +9,20 @@ import {
   TableRow,
 } from "../../components/ui/table";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { Pencil, Trash2 } from "lucide-react";
-import { useGetAllRoutePickupPoint } from "../../hooks/routePickupPoint";
-import type { TRoutePickupPoint } from "../../types/routePickupPoint.type";
+import { Trash2 } from "lucide-react";
 import CreateRoutePickupPointModal from "../../components/routePickupPointModal/CreateRoutePickupPointModal";
+import DeleteRoutePickupPointModal from "../../components/routePickupPointModal/DeleteRoutePickupPointModal";
+import { useGetRoutesWithStops } from "../../hooks/route.hook";
+import type { TRouteWithPickupPoints } from "../../types/routes.type";
 
 const RoutePickupPoint = () => {
   const [isRoutePickupPointOpen, setIsRoutePickupPointOpen] = useState(false);
-  const { data, isLoading } = useGetAllRoutePickupPoint();
-  const routePickupPointData = data?.data;
-  console.log(routePickupPointData);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
+
+  const { data, isLoading } = useGetRoutesWithStops();
+  const routesWithStops = data?.data;
+  console.log(routesWithStops);
   return (
     <>
       <div className="flex justify-between items-center mb-2">
@@ -38,35 +42,37 @@ const RoutePickupPoint = () => {
           <TableRow>
             <TableHead>Route</TableHead>
             <TableHead>Pickup Point</TableHead>
-            <TableHead>Stop No</TableHead>
             <TableHead>Destination</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
-          {routePickupPointData?.map((routePickupPoint: TRoutePickupPoint) => (
-            <TableRow key={routePickupPoint?.id}>
-              <TableCell> {routePickupPoint?.route?.name}</TableCell>
-              <TableCell> {routePickupPoint?.pickupPoint?.name}</TableCell>
-              <TableCell>{routePickupPoint?.stopOrder}</TableCell>
-              <TableCell>{routePickupPoint?.route?.endPoint}</TableCell>
+          {routesWithStops?.map((routesWithStop: TRouteWithPickupPoints) => (
+            <TableRow key={routesWithStop?.id}>
+              <TableCell> {routesWithStop?.name}</TableCell>
+              <TableCell>
+                <ol className="list-decimal pl-4 space-y-1">
+                  {routesWithStop.routePickupPoint?.map((stop) => (
+                    <li key={stop.stopOrder} className="text-sm">
+                      {stop.pickupPoint.name}
+                    </li>
+                  ))}
+                </ol>
+              </TableCell>
+
+              <TableCell>{routesWithStop?.endPoint}</TableCell>
               {/* action btn */}
-              <TableCell className="text-right">
+              <TableCell className="">
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
                     size="icon"
-                    className="h-8 w-8 text-blue-600 hover:bg-blue-50"
-                    onClick={() => console.log("Edit", routePickupPoint?.id)}
-                  >
-                    <Pencil size={16} />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-8 w-8 text-red-600 hover:bg-red-50"
-                    onClick={() => console.log("Delete", routePickupPoint?.id)}
+                    className="h-8 w-8 text-red-600 hover:bg-red-50 cursor-pointer"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      // setDeleteId(routesWithStop?.id);
+                    }}
                   >
                     <Trash2 size={16} />
                   </Button>
@@ -88,7 +94,7 @@ const RoutePickupPoint = () => {
           )}
 
           {/*  list is empty */}
-          {routePickupPointData?.length === 0 && (
+          {routesWithStops?.length === 0 && (
             <TableRow>
               <TableCell
                 colSpan={5}
@@ -106,6 +112,12 @@ const RoutePickupPoint = () => {
       <CreateRoutePickupPointModal
         open={isRoutePickupPointOpen}
         setOpen={setIsRoutePickupPointOpen}
+      />
+      {/* delete a route pickup point modal */}
+      <DeleteRoutePickupPointModal
+        open={isDeleteModalOpen}
+        setOpen={setIsDeleteModalOpen}
+        id={deleteId}
       />
     </>
   );

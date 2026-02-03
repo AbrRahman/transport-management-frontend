@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle } from "../../components/ui/dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { Dispatch, SetStateAction } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
 import RHFInput from "../form/RHFInput/RHFInput";
@@ -29,7 +29,8 @@ const CreateFeeMasterModal = ({ open, setOpen }: TModalProps) => {
   });
 
   //   get route set as a potion
-  const { data } = useGetAllRoutesByUnassignedTransferFee();
+  const { data, isLoading: routeLoading } =
+    useGetAllRoutesByUnassignedTransferFee();
   const routes = data?.data;
   const options = routes?.map((route: TRoute) => ({
     label: route?.name,
@@ -47,7 +48,16 @@ const CreateFeeMasterModal = ({ open, setOpen }: TModalProps) => {
       },
     });
   };
-
+  // if route data is empty then close modal
+  useEffect(() => {
+    if (!open) return;
+    if (routeLoading) return;
+    // route empty
+    if (routes && routes.length == 0) {
+      toast.error("No available routes found. Please create a route first.");
+      setOpen(false);
+    }
+  }, [open, routeLoading, routes, setOpen]);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>

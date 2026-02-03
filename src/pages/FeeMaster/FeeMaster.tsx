@@ -9,16 +9,19 @@ import {
   TableRow,
 } from "../../components/ui/table";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { useGetAllTransportFee } from "../../hooks/feeMaster.hook";
 import type { TFeeMaster } from "../../types/feeMaster.type";
 import CreateFeeMasterModal from "../../components/feeMasterModal/CreateFeeMasterModal";
 import DeleteFeeMasterModal from "../../components/feeMasterModal/DeleteFeeMasterModal";
+import UpdateFeeMasterModal from "../../components/feeMasterModal/UpdateFeeMasterModal";
 
 const FeeMaster = () => {
   const [isFeeMasterModalOpen, setIsFeeMasterModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState("");
+  const [updateId, setUpdateId] = useState("");
 
   const { data, isLoading } = useGetAllTransportFee();
   const feeMastersData = data?.data;
@@ -59,8 +62,19 @@ const FeeMaster = () => {
               <TableCell> {feeMaster?.route.endPoint}</TableCell>
 
               {/* action btn */}
-              <TableCell className="">
+              <TableCell>
                 <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="h-8 w-8 text-blue-600 hover:bg-blue-50  cursor-pointer"
+                    onClick={() => {
+                      setIsUpdateModalOpen(true);
+                      setUpdateId(feeMaster?.id);
+                    }}
+                  >
+                    <Pencil size={16} />
+                  </Button>
                   <Button
                     variant="outline"
                     size="icon"
@@ -107,6 +121,14 @@ const FeeMaster = () => {
         open={isFeeMasterModalOpen}
         setOpen={setIsFeeMasterModalOpen}
       />
+
+      {/* update transport fee modal */}
+      <UpdateFeeMasterModal
+        open={isUpdateModalOpen}
+        setOpen={setIsUpdateModalOpen}
+        id={updateId}
+      />
+
       {/* delete transfer fee modal */}
       <DeleteFeeMasterModal
         open={isDeleteModalOpen}

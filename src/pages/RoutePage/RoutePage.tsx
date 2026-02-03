@@ -9,14 +9,18 @@ import {
   TableRow,
 } from "../../components/ui/table";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import type { TRoute } from "../../types/routes.type";
 import { useGetAllRoutes } from "../../hooks/route.hook";
 import CreateRouteModal from "../../components/routeModal/CreateRouteModal";
+import DeleteRouteModal from "../../components/routeModal/DeleteRouteModal";
 
 const RoutePage = () => {
   const [isRoutePageModalOpen, setIsRoutePageModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
   const { data, isLoading } = useGetAllRoutes();
+
   const routes = data?.data;
   return (
     <>
@@ -49,24 +53,24 @@ const RoutePage = () => {
               <TableCell>{route?.startPoint}</TableCell>
               <TableCell>{route?.endPoint}</TableCell>
               {/* action btn */}
-              <TableCell className="text-right">
+              <TableCell className="">
                 <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-8 w-8 text-blue-600 hover:bg-blue-50"
-                    onClick={() => console.log("Edit", route?.id)}
-                  >
-                    <Pencil size={16} />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-8 w-8 text-red-600 hover:bg-red-50"
-                    onClick={() => console.log("Delete", route?.id)}
-                  >
-                    <Trash2 size={16} />
-                  </Button>
+                  {/* action btn */}
+                  <TableCell className="">
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="h-8 w-8 text-red-600 hover:bg-red-50 cursor-pointer"
+                        onClick={() => {
+                          setIsDeleteModalOpen(true);
+                          setDeleteId(route?.id);
+                        }}
+                      >
+                        <Trash2 size={16} />
+                      </Button>
+                    </div>
+                  </TableCell>
                 </div>
               </TableCell>
             </TableRow>
@@ -98,11 +102,17 @@ const RoutePage = () => {
         </TableBody>
       </Table>
 
-      {/*  create route  model */}
+      {/*  create route  modal */}
 
       <CreateRouteModal
         open={isRoutePageModalOpen}
         setOpen={setIsRoutePageModalOpen}
+      />
+      {/* delete a pickup point modal */}
+      <DeleteRouteModal
+        open={isDeleteModalOpen}
+        setOpen={setIsDeleteModalOpen}
+        id={deleteId}
       />
     </>
   );

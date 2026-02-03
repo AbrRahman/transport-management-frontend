@@ -9,15 +9,17 @@ import {
   TableRow,
 } from "../../components/ui/table";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useGetAllAssignVehicle } from "../../hooks/assignVehicle";
 import type { TAssignVehicle } from "../../types/assignVehicle";
 import CreateAssignVehicleModal from "../../components/assignVehicleModal/CreateAssignVehicleModal";
+import DeleteAssignVehicleModal from "../../components/assignVehicleModal/DeleteAssignVehicleModal";
 
 const AssignVehicle = () => {
   const [isCreateAssignVehicleOpen, setIsCreateAssignVehicleOpen] =
     useState(false);
-
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
   const { data, isLoading } = useGetAllAssignVehicle();
   const assignVehicleList = data?.data;
 
@@ -54,21 +56,16 @@ const AssignVehicle = () => {
               <TableCell>{assignVehicle?.vehicle?.driverName}</TableCell>
               <TableCell>{assignVehicle?.vehicle?.contactNo}</TableCell>
               {/* action btn */}
-              <TableCell className="text-right">
+              <TableCell className="">
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
                     size="icon"
-                    className="h-8 w-8 text-blue-600 hover:bg-blue-50"
-                    onClick={() => console.log("Edit", assignVehicle?.id)}
-                  >
-                    <Pencil size={16} />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="h-8 w-8 text-red-600 hover:bg-red-50"
-                    onClick={() => console.log("Delete", assignVehicle?.id)}
+                    className="h-8 w-8 text-red-600 hover:bg-red-50 cursor-pointer"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      setDeleteId(assignVehicle?.id);
+                    }}
                   >
                     <Trash2 size={16} />
                   </Button>
@@ -103,11 +100,17 @@ const AssignVehicle = () => {
         </TableBody>
       </Table>
 
-      {/*  create Create assign vehicle  model */}
+      {/*  create Create assign vehicle  modal */}
 
       <CreateAssignVehicleModal
         open={isCreateAssignVehicleOpen}
         setOpen={setIsCreateAssignVehicleOpen}
+      />
+      {/* delete a assign vehicle */}
+      <DeleteAssignVehicleModal
+        open={isDeleteModalOpen}
+        setOpen={setIsDeleteModalOpen}
+        id={deleteId}
       />
     </>
   );

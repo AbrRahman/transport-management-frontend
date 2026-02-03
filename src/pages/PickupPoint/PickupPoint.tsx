@@ -21,6 +21,7 @@ const PickupPoint = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState("");
   const { data, isLoading } = useGetAllPickupPoint();
+
   const pickupPoint = data?.data;
   return (
     <>
@@ -51,10 +52,10 @@ const PickupPoint = () => {
               <TableCell> {pickupPoint?.name}</TableCell>
               <TableCell>{pickupPoint?.location}</TableCell>
               {/* action btn */}
-              <TableCell className="">
+              <TableCell>
                 <div className="flex gap-2">
                   {/* action btn */}
-                  <TableCell className="">
+                  <TableCell>
                     <div className="flex gap-2">
                       <Button
                         variant="outline"

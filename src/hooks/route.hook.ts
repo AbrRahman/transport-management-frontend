@@ -18,6 +18,20 @@ export const useGetAllRoutes = () => {
     },
   });
 };
+export const useGetRoutesWithStops = () => {
+  return useQuery({
+    queryKey: ["route_stops"],
+    queryFn: async () => {
+      try {
+        const { data } = await axiosInstance.get("/route/stop-watch");
+        return data;
+      } catch (error: any) {
+        throw new Error(error?.massage);
+      }
+    },
+  });
+};
+
 export const useGetAllRoutesByUnassignedTransferFee = () => {
   return useQuery({
     queryKey: ["unassign_transfer_fee_route"],
@@ -50,6 +64,29 @@ export const useCreateRoute = () => {
       //   "Something went wrong";
       toast.error("Route create failed");
       console.log(error);
+    },
+  });
+};
+
+// delete a route
+export const useDeleteRoute = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { data } = await axiosInstance.delete(`/route/${id}`);
+      return data;
+    },
+
+    onSuccess: () => {
+      toast.success("Deleted successfully");
+      // auto refetch after delete
+      queryClient.invalidateQueries({
+        queryKey: ["route"],
+      });
+    },
+    onError: (error: AxiosError<any>) => {
+      toast.error("Failed to delete");
+      console.error(error);
     },
   });
 };

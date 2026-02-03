@@ -19,17 +19,21 @@ import type {
   TTransportFee,
 } from "../../types/studentAssign.type";
 import CreateAssignStudentModal from "../../components/assignStudentModal/CreateAssignStudentModal";
+import DeleteAssignStudentModal from "../../components/assignStudentModal/DeleteAssignStudentModal";
+import UpdateAssignStudentModal from "../../components/assignStudentModal/UpdateAssignStudentModal";
 
 const StudentTransport = () => {
   const [isCreateStudentAssignModal, setIsCreateStudentAssignModal] =
     useState(false);
-
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
+  const [updateId, setUpdateId] = useState("");
   // get student transport data
   const { data: studentAssignmentLis, isLoading: SALoading } =
     useGetAllAssignStudent();
 
   const { data: transportFeeList, isLoading: TFLoading } = useGetTransportFee();
-  console.log(transportFeeList?.data);
   return (
     <>
       <div className="flex justify-between items-center mb-2">
@@ -75,26 +79,33 @@ const StudentTransport = () => {
                     </TableCell>
                     <TableCell>{assignStudent?.route?.endPoint}</TableCell>
                     <TableCell>
-                      {assignStudent?.isActive ? "ACTIVE" : "deactivate"}
+                      <span className="text-amber-700 text-xs font-bold">
+                        {" "}
+                        {assignStudent?.isActive ? "ACTIVE" : "DEACTIVATE"}
+                      </span>
                     </TableCell>
                     {/* action btn */}
-                    <TableCell className="text-right">
+                    <TableCell>
                       <div className="flex gap-2">
                         <Button
                           variant="outline"
                           size="icon"
-                          className="h-8 w-8 text-blue-600 hover:bg-blue-50"
-                          onClick={() => console.log("Edit", assignStudent?.id)}
+                          className="h-8 w-8 text-blue-600 hover:bg-blue-50  cursor-pointer"
+                          onClick={() => {
+                            setIsUpdateModalOpen(true);
+                            setUpdateId(assignStudent?.id);
+                          }}
                         >
                           <Pencil size={16} />
                         </Button>
                         <Button
                           variant="outline"
                           size="icon"
-                          className="h-8 w-8 text-red-600 hover:bg-red-50"
-                          onClick={() =>
-                            console.log("Delete", assignStudent?.id)
-                          }
+                          className="h-8 w-8 text-red-600 hover:bg-red-50 cursor-pointer"
+                          onClick={() => {
+                            setIsDeleteModalOpen(true);
+                            setDeleteId(assignStudent?.id);
+                          }}
                         >
                           <Trash2 size={16} />
                         </Button>
@@ -184,6 +195,18 @@ const StudentTransport = () => {
       <CreateAssignStudentModal
         open={isCreateStudentAssignModal}
         setOpen={setIsCreateStudentAssignModal}
+      />
+      {/* delete a assign student modal */}
+      <DeleteAssignStudentModal
+        open={isDeleteModalOpen}
+        setOpen={setIsDeleteModalOpen}
+        id={deleteId}
+      />
+      {/* update active status a assign student modal */}
+      <UpdateAssignStudentModal
+        open={isUpdateModalOpen}
+        setOpen={setIsUpdateModalOpen}
+        id={updateId}
       />
     </>
   );

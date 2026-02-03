@@ -31,10 +31,6 @@ export const useCreateTransportFee = () => {
       queryClient.invalidateQueries({ queryKey: ["transport_fee"] });
     },
     onError: (error: AxiosError<any>) => {
-      // const message =
-      //   error.response?.data?.message ||
-      //   error.message ||
-      //   "Something went wrong";
       toast.error("Route create failed");
       console.log(error);
     },
@@ -59,6 +55,52 @@ export const useDeleteRouteTransferFee = () => {
     },
     onError: (error: AxiosError<any>) => {
       toast.error("Failed to delete");
+      console.error(error);
+    },
+  });
+};
+
+// get single route transport fee
+export const useGetSingleTransportFee = (id: string) => {
+  return useQuery({
+    queryKey: ["single_transport_fee", id],
+    queryFn: async () => {
+      try {
+        const { data } = await axiosInstance.get(`/transport-fee/${id}`);
+        return data;
+      } catch (error: any) {
+        console.log(error);
+        throw new Error(error?.massage);
+      }
+    },
+    enabled: !!id,
+  });
+};
+
+// update a transfer fee
+export const useUpdateRouteTransferFee = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (payload: {
+      id: string;
+      data: { monthlyFee: number };
+    }) => {
+      const { data } = await axiosInstance.put(
+        `/transport-fee/${payload?.id}`,
+        payload?.data,
+      );
+      return data;
+    },
+
+    onSuccess: () => {
+      toast.success("Update successfully");
+      // auto refetch after delete
+      queryClient.invalidateQueries({
+        queryKey: ["transport_fee"],
+      });
+    },
+    onError: (error: AxiosError<any>) => {
+      toast.error("Failed to Update");
       console.error(error);
     },
   });

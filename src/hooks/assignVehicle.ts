@@ -61,7 +61,13 @@ export const useCreateAssignVehicle = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["assign_vehicle", "unassigned_vehicle", "unassigned_route"],
+        queryKey: ["assign_vehicle"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["unassigned_vehicle"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["unassigned_route"],
       });
     },
     onError: (error: AxiosError<any>) => {
@@ -71,6 +77,29 @@ export const useCreateAssignVehicle = () => {
       //   "Something went wrong";
       toast.error("Route PickupPoint create failed");
       console.log(error);
+    },
+  });
+};
+
+// delete a route pickup point
+export const useDeleteAAssignVehicle = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { data } = await axiosInstance.delete(`/route-vehicle/${id}`);
+      return data;
+    },
+
+    onSuccess: () => {
+      toast.success("Deleted successfully");
+      // auto refetch after delete
+      queryClient.invalidateQueries({
+        queryKey: ["assign_vehicle"],
+      });
+    },
+    onError: (error: AxiosError<any>) => {
+      toast.error("Failed to delete");
+      console.error(error);
     },
   });
 };

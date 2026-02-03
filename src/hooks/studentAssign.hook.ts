@@ -82,3 +82,52 @@ export const useCreateStudentAssignment = () => {
     },
   });
 };
+
+// delete assign student
+export const useDeleteAssignStudent = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { data } = await axiosInstance.delete(
+        `/student-transport/student-assign/${id}`,
+      );
+      return data;
+    },
+
+    onSuccess: () => {
+      toast.success("Deleted successfully");
+      // auto refetch after delete
+      queryClient.invalidateQueries({
+        queryKey: ["assign_student"],
+      });
+    },
+    onError: (error: AxiosError<any>) => {
+      toast.error("Failed to delete");
+      console.error(error);
+    },
+  });
+};
+// toggle update assign student
+export const useUpdateAssignStudent = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { data } = await axiosInstance.put(
+        `/student-transport/student-assign/${id}`,
+      );
+      return data;
+    },
+
+    onSuccess: () => {
+      toast.success("update successfully");
+      // auto refetch after delete
+      queryClient.invalidateQueries({
+        queryKey: ["assign_student"],
+      });
+    },
+    onError: (error: AxiosError<any>) => {
+      toast.error("Failed to update");
+      console.error(error);
+    },
+  });
+};

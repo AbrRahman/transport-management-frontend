@@ -25,7 +25,7 @@ export const useGetPickupPointBaseOnRoute = (routeId?: string) => {
     queryFn: async () => {
       try {
         const { data } = await axiosInstance.get(
-          `/rote-pickup-point/route/${routeId}`,
+          `/route-pickup-point/route/${routeId}`,
         );
         return data;
       } catch (error: any) {
