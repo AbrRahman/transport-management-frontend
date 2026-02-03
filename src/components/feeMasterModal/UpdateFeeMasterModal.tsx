@@ -4,7 +4,6 @@ import { useEffect, type Dispatch, type SetStateAction } from "react";
 import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
 import RHFInput from "../form/RHFInput/RHFInput";
-import { toast } from "sonner";
 
 import {
   updateFeeMasterSchema,
@@ -41,12 +40,10 @@ const UpdateFeeMasterModal = ({ open, setOpen, id }: TModalProps) => {
       {
         onSuccess: () => {
           setOpen(false);
-          toast.success("Transfer fee update successfully");
         },
       },
     );
   };
-
   useEffect(() => {
     if (feeMasterData) {
       form.reset({

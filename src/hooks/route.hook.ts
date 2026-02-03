@@ -58,10 +58,6 @@ export const useCreateRoute = () => {
       queryClient.invalidateQueries({ queryKey: ["route"] });
     },
     onError: (error: AxiosError<any>) => {
-      // const message =
-      //   error.response?.data?.message ||
-      //   error.message ||
-      //   "Something went wrong";
       toast.error("Route create failed");
       console.log(error);
     },
@@ -86,6 +82,55 @@ export const useDeleteRoute = () => {
     },
     onError: (error: AxiosError<any>) => {
       toast.error("Failed to delete");
+      console.error(error);
+    },
+  });
+};
+
+// get single route
+export const useGetSingleRoute = (
+  id: string,
+  options?: { enabled?: boolean },
+) => {
+  return useQuery({
+    queryKey: ["single_route", id],
+    queryFn: async () => {
+      try {
+        const { data } = await axiosInstance.get(`/route/${id}`);
+        return data;
+      } catch (error: any) {
+        console.log(error);
+        throw new Error(error?.massage);
+      }
+    },
+    enabled: options?.enabled,
+  });
+};
+
+// update a route
+export const useUpdateRoute = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (payload: {
+      id: string;
+      data: Partial<TRouteInputs>;
+    }) => {
+      const { data } = await axiosInstance.put(
+        `/route/${payload?.id}`,
+        payload?.data,
+      );
+      return data;
+    },
+
+    onSuccess: () => {
+      toast.success("Update successfully");
+      // auto refetch after
+      queryClient.invalidateQueries({
+        queryKey: ["route"],
+      });
+    },
+    onError: (error: AxiosError<any>) => {
+      toast.error("Failed to Update");
       console.error(error);
     },
   });
