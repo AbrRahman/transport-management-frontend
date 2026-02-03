@@ -59,7 +59,6 @@ const RoutePage = () => {
               {/* action btn */}
               <TableCell>
                 <div className="flex gap-2">
-                  {/* action btn */}
                   <Button
                     variant="outline"
                     size="icon"

@@ -48,11 +48,7 @@ export const useCreatePickupPoint = () => {
       queryClient.invalidateQueries({ queryKey: ["get_pickup_point"] });
     },
     onError: (error: AxiosError<any>) => {
-      // const message =
-      //   error.response?.data?.message ||
-      //   error.message ||
-      //   "Something went wrong";
-      toast.error("Pickup point create faild");
+      toast.error("Pickup point create failed");
       console.log(error);
     },
   });
@@ -75,6 +71,55 @@ export const useDeleteAPickupPoint = () => {
     },
     onError: (error: AxiosError<any>) => {
       toast.error("Failed to delete");
+      console.error(error);
+    },
+  });
+};
+
+// get single route
+export const useGetSinglePickupPoint = (
+  id: string,
+  options?: { enabled?: boolean },
+) => {
+  return useQuery({
+    queryKey: ["single_pickup_point", id],
+    queryFn: async () => {
+      try {
+        const { data } = await axiosInstance.get(`/pickup-point/${id}`);
+        return data;
+      } catch (error: any) {
+        console.log(error);
+        throw new Error(error?.massage);
+      }
+    },
+    enabled: options?.enabled,
+  });
+};
+
+// update a route
+export const useUpdatePickupPoint = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (payload: {
+      id: string;
+      data: Partial<TPickupPointInputs>;
+    }) => {
+      const { data } = await axiosInstance.put(
+        `/pickup-point/${payload?.id}`,
+        payload?.data,
+      );
+      return data;
+    },
+
+    onSuccess: () => {
+      toast.success("Update successfully");
+      // auto refetch after
+      queryClient.invalidateQueries({
+        queryKey: ["get_pickup_point"],
+      });
+    },
+    onError: (error: AxiosError<any>) => {
+      toast.error("Failed to Update");
       console.error(error);
     },
   });
