@@ -72,13 +72,13 @@ export const useCreateStudentAssignment = () => {
       queryClient.invalidateQueries({ queryKey: ["transport_fee"] });
       queryClient.invalidateQueries({ queryKey: ["student"] });
     },
+
     onError: (error: AxiosError<any>) => {
-      // const message =
-      //   error.response?.data?.message ||
-      //   error.message ||
-      //   "Something went wrong";
-      toast.error("student assignment create failed");
-      console.log(error);
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "student assignment create failed";
+      toast.error(message);
     },
   });
 };

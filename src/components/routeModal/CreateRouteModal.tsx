@@ -40,7 +40,7 @@ const CreateRouteModal = ({ open, setOpen }: TModalProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
-        <DialogTitle>Add a vehicle</DialogTitle>
+        <DialogTitle>Add a route</DialogTitle>
         {/* form */}
         <form
           onSubmit={form.handleSubmit(handleCreateRoute)}
