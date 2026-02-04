@@ -11,7 +11,6 @@ const DeletePickupPointModal = ({ open, setOpen, id }: TModalProps) => {
   const { mutate: deleteTransportFee, isPending } = useDeleteAPickupPoint();
 
   const handleDelete = async () => {
-    console.log(id);
     await deleteTransportFee(id, {
       onSuccess: () => {
         setOpen(false);

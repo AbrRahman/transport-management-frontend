@@ -29,6 +29,7 @@ export const useCreateRoutePickupPoint = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["route_pickup_point"] });
+      queryClient.invalidateQueries({ queryKey: ["route_stops"] });
     },
     onError: (error: AxiosError<any>) => {
       const message =
@@ -36,29 +37,6 @@ export const useCreateRoutePickupPoint = () => {
         error.message ||
         "Something went wrong";
       toast.error(message);
-    },
-  });
-};
-
-// delete a route pickup point
-export const useDeleteRoutePickupPoint = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (id: string) => {
-      const { data } = await axiosInstance.delete(`/route-pickup-point/${id}`);
-      return data;
-    },
-
-    onSuccess: () => {
-      toast.success("Deleted successfully");
-      // auto refetch after delete
-      queryClient.invalidateQueries({
-        queryKey: ["route_pickup_point"],
-      });
-    },
-    onError: (error: AxiosError<any>) => {
-      toast.error("Failed to delete");
-      console.error(error);
     },
   });
 };

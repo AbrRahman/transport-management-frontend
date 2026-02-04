@@ -11,7 +11,6 @@ const DeleteVehicleModal = ({ open, setOpen, id }: TModalProps) => {
   const { mutate: deleteVehicle, isPending } = useDeleteAVehicle();
 
   const handleDelete = async () => {
-    console.log(id);
     await deleteVehicle(id, {
       onSuccess: () => {
         setOpen(false);
@@ -20,7 +19,7 @@ const DeleteVehicleModal = ({ open, setOpen, id }: TModalProps) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open && !!id} onOpenChange={setOpen}>
       <DialogContent>
         <DialogTitle>Do you really want to delete this record?</DialogTitle>
 

@@ -71,10 +71,6 @@ export const useCreateAssignVehicle = () => {
       });
     },
     onError: (error: AxiosError<any>) => {
-      // const message =
-      //   error.response?.data?.message ||
-      //   error.message ||
-      //   "Something went wrong";
       toast.error("Route PickupPoint create failed");
       console.log(error);
     },

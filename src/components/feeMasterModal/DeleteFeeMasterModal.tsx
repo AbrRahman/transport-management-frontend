@@ -12,7 +12,6 @@ const DeleteFeeMasterModal = ({ open, setOpen, id }: TModalProps) => {
   const { mutate: deleteTransportFee, isPending } = useDeleteRouteTransferFee();
 
   const handleDelete = async () => {
-    console.log(id);
     await deleteTransportFee(id, {
       onSuccess: () => {
         setOpen(false);

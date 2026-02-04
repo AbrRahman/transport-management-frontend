@@ -90,7 +90,7 @@ const RoutePage = () => {
 
           {isLoading && (
             <TableRow>
-              <TableCell colSpan={3} className="h-40 text-center">
+              <TableCell colSpan={4} className="h-40 text-center">
                 <div className="flex justify-center items-center w-full">
                   <LoadingSpinner />
                 </div>
@@ -102,7 +102,7 @@ const RoutePage = () => {
           {routes?.length === 0 && (
             <TableRow>
               <TableCell
-                colSpan={2}
+                colSpan={4}
                 className="text-center text-muted-foreground"
               >
                 No data found

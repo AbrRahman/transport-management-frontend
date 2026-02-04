@@ -26,17 +26,18 @@ const CreateVehicleModal = ({ open, setOpen }: TCreateVehicleModalProps) => {
     },
   });
 
-  const { mutate: createVehicle, isPending, isSuccess } = useCreateVehicle();
+  const { mutate: createVehicle, isPending } = useCreateVehicle();
 
   // handle create vehicleData
   const handleCreateVehicleData = async (data: TVehicleInputs) => {
     // submit create vehicle data
 
-    await createVehicle(data);
-    if (isSuccess) {
-      setOpen(false);
-      form.reset();
-    }
+    await createVehicle(data, {
+      onSuccess: () => {
+        setOpen(false);
+        form.reset();
+      },
+    });
   };
 
   return (
@@ -73,10 +74,18 @@ const CreateVehicleModal = ({ open, setOpen }: TCreateVehicleModalProps) => {
             placeholder="Enter vehicle contract number"
           />
           <div className="flex justify-end gap-4">
-            <Button type="button" onClick={() => setOpen(false)}>
+            <Button
+              type="button"
+              className="cursor-pointer"
+              onClick={() => setOpen(false)}
+            >
               Cancel
             </Button>
-            <Button type="submit" disabled={isPending}>
+            <Button
+              type="submit"
+              className="cursor-pointer"
+              disabled={isPending}
+            >
               Save
             </Button>
           </div>

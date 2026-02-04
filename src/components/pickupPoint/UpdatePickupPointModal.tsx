@@ -77,7 +77,11 @@ const UpdatePickupPointModal = ({ open, setOpen, id }: TModalProps) => {
             placeholder="Enter Pickup point location"
           />
           <div className="flex justify-end gap-4 cursor-pointer ">
-            <Button type="button" onClick={() => setOpen(false)}>
+            <Button
+              type="button"
+              className="cursor-pointer"
+              onClick={() => setOpen(false)}
+            >
               Cancel
             </Button>
             <Button

@@ -60,10 +60,18 @@ const CreatePickupPointModal = ({ open, setOpen }: TModalProps) => {
             placeholder="Enter Pickup point location"
           />
           <div className="flex justify-end gap-4">
-            <Button type="button" onClick={() => setOpen(false)}>
+            <Button
+              type="button"
+              className="cursor-pointer"
+              onClick={() => setOpen(false)}
+            >
               Cancel
             </Button>
-            <Button type="submit" disabled={isPending}>
+            <Button
+              type="submit"
+              className="cursor-pointer"
+              disabled={isPending}
+            >
               Save
             </Button>
           </div>

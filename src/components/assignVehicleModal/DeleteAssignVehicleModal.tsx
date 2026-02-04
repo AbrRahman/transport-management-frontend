@@ -11,7 +11,6 @@ const DeleteAssignVehicleModal = ({ open, setOpen, id }: TModalProps) => {
   const { mutate: deleteAssignVehicle, isPending } = useDeleteAAssignVehicle();
 
   const handleDelete = async () => {
-    console.log(id);
     await deleteAssignVehicle(id, {
       onSuccess: () => {
         setOpen(false);

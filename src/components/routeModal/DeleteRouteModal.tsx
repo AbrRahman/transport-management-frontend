@@ -11,7 +11,6 @@ const DeleteRouteModal = ({ open, setOpen, id }: TModalProps) => {
   const { mutate: deleteVehicle, isPending } = useDeleteRoute();
 
   const handleDelete = async () => {
-    console.log(id);
     await deleteVehicle(id, {
       onSuccess: () => {
         setOpen(false);

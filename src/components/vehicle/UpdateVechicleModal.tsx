@@ -92,7 +92,11 @@ const UpdateVehicleModal = ({ open, setOpen, id }: TModalProps) => {
             placeholder="Enter vehicle contract number"
           />
           <div className="flex justify-end gap-4 cursor-pointer ">
-            <Button type="button" onClick={() => setOpen(false)}>
+            <Button
+              className="cursor-pointer"
+              type="button"
+              onClick={() => setOpen(false)}
+            >
               Cancel
             </Button>
             <Button

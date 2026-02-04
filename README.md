@@ -1,73 +1,122 @@
-# React + TypeScript + Vite
+# 🚍 Transport Management Module – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **Transport Management Module frontend** built as part of a **School Management System** technical assignment.  
+This application enables administrators to manage vehicles, routes, pickup points, fee masters, and student transport assignments in a clean, structured, and scalable way.
 
-Currently, two official plugins are available:
+> This repository contains the **frontend implementation only**, designed to integrate with a Node.js + Express.js + PostgreSQL (Prisma) backend.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Features Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🚦 Transport Configuration (Masters)
 
-## Expanding the ESLint configuration
+- **Fees Master**
+  - Define and manage transport fee structures.
+- **Pickup Points**
+  - Create, update, and delete pickup locations.
+- **Vehicles**
+  - Manage vehicle details (vehicle number, driver, helper, contact info).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🛣️ Route Operations
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Routes**
+  - Define routes with start point, end point, and route name.
+- **Route Pickup Points**
+  - Map multiple pickup points to a route with stop order.
+- **Assign Vehicle**
+  - Assign vehicles to routes.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### 🎓 Student Transport
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **Student Transport Assignment**
+  - Assign students to routes and vehicles.
+- **Student Transport Fees View**
+  - Displays assigned transport records (fee generation handled by backend).
+
+---
+
+### 🔗 Demo Links
+
+- 🔗 **Live Frontend:** [https://transport-management-smoky.vercel.app/](https://transport-management-smoky.vercel.app/)
+- 🔗 **Backend GitHub Repository:** [transport-management-backend](https://github.com/AbrRahman/transport-management-backend)
+
+---
+
+## 🧰 Tech Stack
+
+### Frontend
+
+- **React.js (v19)**
+- **TypeScript**
+- **Vite**
+- **React Router v7**
+- **TanStack React Query**
+- **Axios**
+
+### Forms & Validation
+
+- **React Hook Form**
+- **Zod** (Schema-based form validation)
+
+### UI & Styling
+
+- **Tailwind CSS**
+- **shadcn/ui**
+- **Lucide React Icons**
+- **Sonner** (Toast notifications)
+
+### Code Quality
+
+- **ESLint**
+- **Strict TypeScript**
+- Modular and scalable folder structure
+
+---
+
+## ⚙️ Local Installation Guide
+
+### 1. Clone the Repository
+
+```
+https://github.com/AbrRahman/transport-management-frontend.git
+cd transport-management-frontend
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install Dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```
+npm install
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 3. Setup Environment Variables
+
+Create a **.env.local** file in the root:
+
+```
+VITE_API_BASE_URL=http://localhost:3000/api/v1
+```
+
+This variable defines the **base URL of the backend API.**
+Make sure your backend server is running on port **3000** and exposes APIs under /api/v1.
+
+### Step 4: Start Development Server
+
+```
+npm run dev
+```
+
+## 📁 Project Structure (Simplified)
+
+```
+src/
+├── components/ # Reusable UI & feature components
+├── pages/ # Application pages
+├── hooks/ # React Query hooks
+├── schema/ # Zod validation schemas
+├── types/ # TypeScript types
+├── lib/ # API & utility helpers
+├── routes/ # Application routing
+├── layout/ # Layout components
+└── main.tsx # Entry point
 ```
